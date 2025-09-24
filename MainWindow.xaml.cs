@@ -2,10 +2,11 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
-namespace PdfExplorer
+namespace SanadBan
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
     {
         public MainWindow()
         {
@@ -20,6 +21,7 @@ namespace PdfExplorer
 
             DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
             TreeViewItem rootItem = CreateDirectoryNode(dirInfo);
+            FolderTree.Items.Clear(); // Clear existing items before loading new ones
             FolderTree.Items.Add(rootItem);
         }
 
@@ -70,6 +72,30 @@ namespace PdfExplorer
                     PdfViewer.Navigate(new Uri(path));
                 }
             }
+        }
+
+        private void OpenFolder_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+                {
+                    LoadDirectory(dialog.SelectedPath);
+                }
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            var aboutWindow = new AboutWindow();
+            aboutWindow.Owner = this;
+            aboutWindow.ShowDialog();
         }
     }
 }

@@ -3,6 +3,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <RootNamespace>PdfExplorer</RootNamespace>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>SanadBan</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Wpf.Ui" Version="4.0.3" />
+  </ItemGroup>
 </Project>
