@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>SanadBan</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Wpf.Ui" Version="4.0.3" />
+    <PackageReference Include="Wpf.Ui" Version="3.0.3" />
   </ItemGroup>
 </Project>
