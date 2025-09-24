@@ -88,7 +88,7 @@ namespace SanadBan
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
