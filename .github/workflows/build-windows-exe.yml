@@ -25,16 +25,16 @@ jobs:
           dotnet-version: '7.0.x'   # نیاز به نسخه‌ی مناسب پروژه‌ات: 6.0.x یا 8.0.x در صورت نیاز
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore SanadBan.csproj
 
       - name: Build (Release)
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build SanadBan.csproj --configuration Release --no-restore
 
       - name: Publish single-file self-contained EXE (win-x64)
         run: |
           # پوشه خروجی
           $out = "$env:GITHUB_WORKSPACE\publish\win-x64"
-          dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=false -o $out
+          dotnet publish SanadBan.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=false -o $out
 
       - name: List publish folder
         run: Get-ChildItem -Recurse "$env:GITHUB_WORKSPACE\publish" | Select-Object FullName, Length
