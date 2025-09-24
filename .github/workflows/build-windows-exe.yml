@@ -22,7 +22,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '7.0.x'   # نیاز به نسخه‌ی مناسب پروژه‌ات: 6.0.x یا 8.0.x در صورت نیاز
+          dotnet-version: '8.0.x'
 
       - name: Restore
         run: dotnet restore SanadBan.csproj
