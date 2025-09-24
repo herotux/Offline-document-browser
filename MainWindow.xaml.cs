@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SanadBan
 {
-    public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
+    public partial class MainWindow
     {
         public MainWindow()
         {

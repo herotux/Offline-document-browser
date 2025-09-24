@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Navigation;
 
 namespace SanadBan
@@ -6,7 +7,7 @@ namespace SanadBan
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class AboutWindow : Wpf.Ui.Controls.FluentWindow
+    public partial class AboutWindow
     {
         public AboutWindow()
         {
