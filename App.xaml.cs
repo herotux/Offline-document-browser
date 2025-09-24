@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace SanadBan
+namespace UtilityDocuments
 {
     /// <summary>
     /// Interaction logic for App.xaml

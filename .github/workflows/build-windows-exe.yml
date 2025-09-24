@@ -1,12 +1,12 @@
-name: Build Windows EXE
+name: Build Windows App and MSI Installer
 
 on:
   push:
     branches:
       - main
     tags:
-      - 'v*'    # وقتی تگ با prefex v ساخته شد (مث. v1.0.0) ریلیز هم می‌سازد
-  workflow_dispatch: {}  # اجرای دستی از Actions tab
+      - 'v*'
+  workflow_dispatch: {}
 
 jobs:
   build-and-publish:
@@ -24,26 +24,23 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
-        run: dotnet restore SanadBan.csproj
+      - name: Restore dependencies
+        run: dotnet restore UtilityDocuments.csproj
 
-      - name: Build (Release)
-        run: dotnet build SanadBan.csproj --configuration Release --no-restore
+      - name: Build the application
+        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
 
-      - name: Publish single-file self-contained EXE (win-x64)
-        run: |
-          # پوشه خروجی
-          $out = "$env:GITHUB_WORKSPACE\publish\win-x64"
-          dotnet publish SanadBan.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=false -o $out
+      - name: Build the MSI installer
+        run: dotnet build Setup/setup.wixproj --configuration Release
 
-      - name: List publish folder
-        run: Get-ChildItem -Recurse "$env:GITHUB_WORKSPACE\publish" | Select-Object FullName, Length
+      - name: List build artifacts
+        run: Get-ChildItem -Recurse .\bin, .\Setup\bin | Select-Object FullName, Length
 
-      - name: Upload artifact (exe)
+      - name: Upload Artifacts (MSI)
         uses: actions/upload-artifact@v4
         with:
-          name: windows-exe
-          path: publish/**
+          name: windows-installer
+          path: Setup/bin/Release/**/*.msi
 
   create-release-on-tag:
     runs-on: ubuntu-latest
@@ -53,7 +50,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: windows-exe
+          name: windows-installer
           path: artifacts
 
       - name: Create GitHub release for tag
@@ -66,11 +63,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload exe to release
+      - name: Upload assets to release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          files: artifacts/publish/**/*
+          files: artifacts/*.msi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

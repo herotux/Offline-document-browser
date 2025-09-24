@@ -1,13 +1,15 @@
-<controls:MetroWindow x:Class="SanadBan.MainWindow"
+<controls:MetroWindow x:Class="UtilityDocuments.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="SanadBan" Height="600" Width="900"
-        WindowStartupLocation="CenterScreen">
+        Title="Utility Documents" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Icon="icon.ico">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open Folder..." Click="OpenFolder_Click" />
+                <MenuItem Header="_Close PDF" Click="ClosePdf_Click" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="Exit_Click" />
             </MenuItem>
@@ -17,16 +19,21 @@
         </Menu>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition x:Name="SidebarColumn" Width="250"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Sidebar TreeView -->
-            <TreeView x:Name="FolderTree" SelectedItemChanged="FolderTree_SelectedItemChanged"
-                      Grid.Column="0" Margin="5"/>
+            <!-- Sidebar -->
+            <DockPanel Grid.Column="0" Background="#F5F5F5">
+                <Button x:Name="CollapseButton" Content="«" DockPanel.Dock="Top" HorizontalAlignment="Right" Margin="2" Click="CollapseButton_Click"/>
+                <TreeView x:Name="FolderTree" SelectedItemChanged="FolderTree_SelectedItemChanged" Margin="5"/>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
             <!-- PDF Viewer -->
-            <WebBrowser x:Name="PdfViewer" Grid.Column="1" Margin="5"/>
+            <WebBrowser x:Name="PdfViewer" Grid.Column="2" Margin="5"/>
         </Grid>
     </DockPanel>
 </controls:MetroWindow>

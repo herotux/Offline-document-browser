@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace SanadBan
+namespace UtilityDocuments
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
