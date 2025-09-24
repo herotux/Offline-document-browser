@@ -1,0 +1,15 @@
+<Project Sdk="WixToolset.Sdk/6.0.2">
+  <PropertyGroup>
+    <OutputType>Package</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UtilityDocuments.csproj" />
+  </ItemGroup>
+  <Target Name="Harvest" BeforeTargets="Build">
+    <Exec Command="dotnet publish &quot;..\UtilityDocuments.csproj&quot; -c $(Configuration) -o &quot;$(IntermediateOutputPath)publish&quot;" />
+    <Exec Command="&quot;$(WixToolPath)heat.exe&quot; dir &quot;$(IntermediateOutputPath)publish&quot; -ag -srd -cg HarvestedComponents -o &quot;$(IntermediateOutputPath)HarvestedComponents.wxs&quot;" />
+  </Target>
+  <ItemGroup>
+    <Compile Include="$(IntermediateOutputPath)HarvestedComponents.wxs" />
+  </ItemGroup>
+</Project>

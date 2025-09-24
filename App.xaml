@@ -1,7 +1,7 @@
-<Application x:Class="SanadBan.App"
+<Application x:Class="UtilityDocuments.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SanadBan"
+             xmlns:local="clr-namespace:UtilityDocuments"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
