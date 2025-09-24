@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "restore": {
+    "/app/Setup/setup.wixproj": {}
+  },
+  "projects": {
+    "/app/Setup/setup.wixproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/app/Setup/setup.wixproj",
+        "projectName": "setup",
+        "projectPath": "/app/Setup/setup.wixproj",
+        "packagesPath": "/home/jules/.nuget/packages/",
+        "outputPath": "/app/Setup/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/jules/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "native"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "native": {
+            "targetAlias": "native",
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "native": {
+          "targetAlias": "native"
+        }
+      }
+    }
+  }
+}
