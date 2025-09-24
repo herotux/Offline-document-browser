@@ -3,7 +3,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Feature Id="ProductFeature" Title="UtilityDocuments" Level="1">
-      <ComponentGroupRef Id="HarvestedComponents" />
+      <ComponentGroupRef Id="UtilityDocuments.Generated" />
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
   </Package>
