@@ -1,5 +1,5 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="Utility Documents" Manufacturer="herotux" Version="1.0.0.0" UpgradeCode="c98c2bbc-0bcc-4cc1-8e88-c0acdf806542">
+  <Package Name="Utility Documents" Manufacturer="herotux" Version="1.0.0.0" UpgradeCode="f8321ac2-fcfa-436e-8a6b-88309095a0fb">
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Feature Id="ProductFeature" Title="UtilityDocuments" Level="1">
