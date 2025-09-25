@@ -3,11 +3,10 @@
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UtilityDocuments.csproj">
+    <!-- <ProjectReference Include="..\UtilityDocuments.csproj">
       <Harvest>True</Harvest>
       <ProjectOutputGroups>Binaries;Content;Satellites</ProjectOutputGroups>
       <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
-      <ComponentGroupDisplayName>UtilityDocuments.Generated</ComponentGroupDisplayName>
-    </ProjectReference>
+    </ProjectReference> -->
   </ItemGroup>
 </Project>
