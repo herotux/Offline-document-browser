@@ -1,5 +1,5 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="Utility Documents" Manufacturer="herotux" Version="1.0.0.0" UpgradeCode="f8321ac2-fcfa-436e-8a6b-88309095a0fb">
+  <Package Name="Utility Documents" Manufacturer="herotux" Version="1.0.0.0" UpgradeCode="5fedc4b1-c790-47e6-8428-d0551bf83fcd">
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Feature Id="ProductFeature" Title="UtilityDocuments" Level="1">
@@ -10,10 +10,10 @@
 
   <Fragment>
     <StandardDirectory Id="ProgramFilesFolder">
-      <Directory Id="INSTALLFOLDER" Name="UtilityDocuments" />
+      <Directory Id="INSTALLFOLDER" Name="Utility Documents" />
     </StandardDirectory>
     <StandardDirectory Id="ProgramMenuFolder">
-      <Directory Id="ApplicationProgramsFolder" Name="UtilityDocuments"/>
+      <Directory Id="ApplicationProgramsFolder" Name="Utility Documents" />
     </StandardDirectory>
   </Fragment>
 
