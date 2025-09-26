@@ -7,6 +7,7 @@
       <Harvest>True</Harvest>
       <ProjectOutputGroups>Binaries;Content;Satellites</ProjectOutputGroups>
       <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+      <ComponentGroupDisplayName>UtilityDocuments.Generated</ComponentGroupDisplayName>
     </ProjectReference>
   </ItemGroup>
 </Project>
