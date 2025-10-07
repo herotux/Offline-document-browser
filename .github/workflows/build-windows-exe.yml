@@ -26,15 +26,13 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      # 3. Download and setup WiX 4
-      - name: Download and setup WiX 4
+      # 3. Install WiX Toolset via MSI
+      - name: Install WiX Toolset
         run: |
-          $url = "https://github.com/wixtoolset/wix4/releases/download/v4.0.1/wix311-binaries.zip"
-          $zip = "$env:USERPROFILE\wix.zip"
-          $dest = "$env:USERPROFILE\wix"
-          Invoke-WebRequest -Uri $url -OutFile $zip
-          Expand-Archive -Path $zip -DestinationPath $dest
-          $env:PATH += ";$dest\bin"
+          $msi = "$env:USERPROFILE\wix-cli-x64.msi"
+          Invoke-WebRequest -Uri "https://github.com/wixtoolset/wix/releases/download/v6.0.2/wix-cli-x64.msi" -OutFile $msi
+          Start-Process msiexec.exe -ArgumentList "/i `"$msi`" /quiet /norestart" -Wait
+          $env:PATH += ";C:\Program Files (x86)\WiX Toolset v6\bin"
 
       # 4. Restore dependencies
       - name: Restore dependencies
