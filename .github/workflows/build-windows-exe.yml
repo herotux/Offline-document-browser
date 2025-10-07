@@ -16,26 +16,39 @@ jobs:
         shell: pwsh
 
     steps:
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Setup .NET SDK
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
+      # 3. Install WiX Toolset
+      - name: Install WiX Toolset
+        uses: fire-eggs/setup-wix@v1
+        with:
+          wix-version: '4.0.0'
+
+      # 4. Restore dependencies
       - name: Restore dependencies
         run: dotnet restore UtilityDocuments.csproj
 
+      # 5. Build the WPF application
       - name: Build the application
         run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
 
+      # 6. Build the MSI installer
       - name: Build the MSI installer
         run: dotnet build Setup/setup.wixproj --configuration Release
 
+      # 7. List build artifacts for debugging
       - name: List build artifacts
         run: Get-ChildItem -Recurse .\bin, .\Setup\bin | Select-Object FullName, Length
 
+      # 8. Upload MSI artifact
       - name: Upload Artifacts (MSI)
         uses: actions/upload-artifact@v4
         with:
@@ -47,12 +60,14 @@ jobs:
     needs: build-and-publish
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
+      # 1. Download artifact MSI
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: windows-installer
           path: artifacts
 
+      # 2. Create GitHub release
       - name: Create GitHub release for tag
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -63,7 +78,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload assets to release
+      # 3. Upload MSI to release
+      - name: Upload MSI to release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
