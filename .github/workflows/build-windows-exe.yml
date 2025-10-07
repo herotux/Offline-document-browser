@@ -26,9 +26,9 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      # 3. Install WiX Toolset via Chocolatey
+      # 3. Install WiX Toolset (آخرین نسخه موجود)
       - name: Install WiX Toolset
-        run: choco install wix -y --version=4.0.0
+        run: choco install wix -y
 
       # 4. Restore dependencies
       - name: Restore dependencies
