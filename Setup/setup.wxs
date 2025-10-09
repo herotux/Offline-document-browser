@@ -1,46 +1,50 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <!-- Package Definition -->
-  <Package Name="Utility Documents"
-           Manufacturer="herotux"
-           Version="1.0.0.0"
-           UpgradeCode="c98c2bbc-0bcc-4cc1-8e88-c0acdf806542">
-
+  <Package Name="Utility Documents" Manufacturer="herotux" Version="1.0.0.0" UpgradeCode="c98c2bbc-0bcc-4cc1-8e88-c0acdf806542">
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Feature Id="ProductFeature" Title="UtilityDocuments" Level="1">
-      <!-- اگر بعدا ComponentGroup استفاده می‌کنید، GUID های خودش را دارد -->
+      <ComponentRef Id="MainExeComponent" />
+      <ComponentRef Id="AllOtherFilesComponent" />
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
   </Package>
 
-  <!-- Directories -->
+  <!-- مسیر نصب فایل‌ها -->
   <Fragment>
     <StandardDirectory Id="ProgramFilesFolder">
       <Directory Id="INSTALLFOLDER" Name="UtilityDocuments" />
     </StandardDirectory>
-
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="ApplicationProgramsFolder" Name="UtilityDocuments"/>
     </StandardDirectory>
   </Fragment>
 
-  <!-- Shortcut Component -->
+  <!-- Component اصلی: exe -->
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="MainExeComponent" Guid="PUT-GUID-HERE">
+        <File Id="UtilityDocumentsExe" Source=".\bin\Release\net8.0-windows\UtilityDocuments.exe" KeyPath="yes" />
+      </Component>
+
+      <!-- سایر فایل‌ها -->
+      <Component Id="AllOtherFilesComponent" Guid="PUT-GUID-HERE">
+        <File Id="PlaceholderHtmlFile" Source=".\placeholder.html" KeyPath="no" />
+        <File Id="AppIconFile" Source=".\icon.ico" KeyPath="no" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <!-- Component شورتکات -->
   <Fragment>
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="6F9619FF-8B86-D011-B42D-00CF4FC964FF">
-        <!-- Shortcut pointing to main exe -->
+      <Component Id="ApplicationShortcut" Guid="PUT-GUID-HERE">
         <Shortcut Id="ApplicationStartMenuShortcut"
                   Name="Utility Documents"
                   Description="Utility Documents Application"
-                  Target="[#UtilityDocuments.exe]"
+                  Target="[#UtilityDocumentsExe]"
                   WorkingDirectory="INSTALLFOLDER"/>
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU"
-                       Key="Software\herotux\UtilityDocuments"
-                       Name="installed"
-                       Type="integer"
-                       Value="1"
-                       KeyPath="yes"/>
+        <RegistryValue Root="HKCU" Key="Software\herotux\UtilityDocuments" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
   </Fragment>
