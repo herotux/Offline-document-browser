@@ -22,14 +22,20 @@
   <!-- Component اصلی: exe -->
   <Fragment>
     <DirectoryRef Id="INSTALLFOLDER">
-      <Component Id="MainExeComponent" Guid="d9f8a2c1-1a5b-4c3d-9f6a-0a1b2c3d4e5f">
-        <File Id="UtilityDocumentsExe" Source="..\UtilityDocuments\bin\Release\net8.0-windows\UtilityDocuments.exe" KeyPath="yes" />
+      <Component Id="MainExeComponent" Guid="*">
+        <File Id="UtilityDocumentsExe"
+              Source="$(var.SourceDir)\bin\Release\net8.0-windows\UtilityDocuments.exe"
+              KeyPath="yes"/>
       </Component>
 
       <!-- سایر فایل‌ها -->
-      <Component Id="AllOtherFilesComponent" Guid="f1e2d3c4-b5a6-7890-1234-56789abcdef0">
-        <File Id="PlaceholderHtmlFile" Source="..\UtilityDocuments\bin\Release\net8.0-windows\placeholder.html" KeyPath="no" />
-        <File Id="AppIconFile" Source="..\UtilityDocuments\icon.ico" KeyPath="no" />
+      <Component Id="AllOtherFilesComponent" Guid="*">
+        <File Id="PlaceholderHtmlFile"
+              Source="$(var.SourceDir)\placeholder.html"
+              KeyPath="no"/>
+        <File Id="AppIconFile"
+              Source="$(var.SourceDir)\icon.ico"
+              KeyPath="no"/>
       </Component>
     </DirectoryRef>
   </Fragment>
@@ -37,7 +43,7 @@
   <!-- Component شورتکات -->
   <Fragment>
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="a1b2c3d4-e5f6-7890-1234-56789abcdef1">
+      <Component Id="ApplicationShortcut" Guid="*">
         <Shortcut Id="ApplicationStartMenuShortcut"
                   Name="Utility Documents"
                   Description="Utility Documents Application"
