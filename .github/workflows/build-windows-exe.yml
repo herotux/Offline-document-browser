@@ -26,7 +26,15 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      # 3. Install WiX Toolset via MSI
+      # 3. Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore UtilityDocuments.csproj
+
+      # 4. Build the WPF application
+      - name: Build the application
+        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
+
+      # 5. Install WiX Toolset via MSI
       - name: Install WiX Toolset
         run: |
           $msi = "$env:USERPROFILE\wix-cli-x64.msi"
@@ -34,34 +42,20 @@ jobs:
           Start-Process msiexec.exe -ArgumentList "/i `"$msi`" /quiet /norestart" -Wait
           $env:PATH += ";C:\Program Files (x86)\WiX Toolset v6\bin"
 
-      # 4. Restore dependencies
-      - name: Restore dependencies
-        run: dotnet restore UtilityDocuments.csproj
-
-      # 5. Build the WPF application
-      - name: Build the application
-        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
-
-      # 6. Build the MSI installer using WiX CLI
-      - name: Build the MSI installer
+      # 6. Build the MSI installer
+      - name: Build MSI installer
         run: |
-          $outputDir = "$(pwd)\bin\Release\net8.0-windows"
-          $wixFile = "Setup\setup.wxs"
-          $objFile = "Setup\setup.wixobj"
-          $msiFile = "Setup\bin\Release\UtilityDocuments.msi"
-
-          # Create output folder if it doesn't exist
-          if (-not (Test-Path "Setup\bin\Release")) {
-            New-Item -ItemType Directory -Path "Setup\bin\Release" | Out-Null
-          }
+          $sourceDir = "$(pwd)\bin\Release\net8.0-windows"
+          $wixObj = "Setup\setup.wixobj"
+          $msiOut = "Setup\bin\Release\UtilityDocuments.msi"
 
           # Compile .wxs to .wixobj
-          candle.exe -dOutputDir=$outputDir $wixFile -out $objFile
+          candle.exe -dSourceDir=$sourceDir Setup\setup.wxs -out $wixObj
 
           # Link .wixobj to .msi
-          light.exe $objFile -out $msiFile
+          light.exe $wixObj -out $msiOut
 
-      # 7. List build artifacts for debugging
+      # 7. List build artifacts
       - name: List build artifacts
         run: Get-ChildItem -Recurse .\bin, .\Setup\bin | Select-Object FullName, Length
 
@@ -77,15 +71,13 @@ jobs:
     needs: build-and-publish
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
-      # 1. Download artifact MSI
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: windows-installer
           path: artifacts
 
-      # 2. Create GitHub release
-      - name: Create GitHub release for tag
+      - name: Create GitHub release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
@@ -95,7 +87,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Upload MSI to release
       - name: Upload MSI to release
         uses: softprops/action-gh-release@v1
         with:
