@@ -42,9 +42,24 @@ jobs:
       - name: Build the application
         run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
 
-      # 6. Build the MSI installer
+      # 6. Build the MSI installer using WiX CLI
       - name: Build the MSI installer
-        run: dotnet build Setup/setup.wixproj --configuration Release
+        run: |
+          $outputDir = "$(pwd)\bin\Release\net8.0-windows"
+          $wixFile = "Setup\setup.wxs"
+          $objFile = "Setup\setup.wixobj"
+          $msiFile = "Setup\bin\Release\UtilityDocuments.msi"
+
+          # Create output folder if it doesn't exist
+          if (-not (Test-Path "Setup\bin\Release")) {
+            New-Item -ItemType Directory -Path "Setup\bin\Release" | Out-Null
+          }
+
+          # Compile .wxs to .wixobj
+          candle.exe -dOutputDir=$outputDir $wixFile -out $objFile
+
+          # Link .wixobj to .msi
+          light.exe $objFile -out $msiFile
 
       # 7. List build artifacts for debugging
       - name: List build artifacts
