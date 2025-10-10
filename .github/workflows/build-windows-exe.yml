@@ -1,9 +1,9 @@
-name: Build Windows App and MSI Installer
+name: Build Windows Application
 
 on:
   push:
     branches:
-      - main
+      - '**'
     tags:
       - 'v*'
   workflow_dispatch: {}
@@ -34,37 +34,44 @@ jobs:
       - name: Build the application
         run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
 
-      # 5. Install WiX Toolset via MSI
+      # --- Steps for main branch (Installer) ---
       - name: Install WiX Toolset
+        if: github.ref == 'refs/heads/main'
         run: |
           $msi = "$env:USERPROFILE\wix-cli-x64.msi"
           Invoke-WebRequest -Uri "https://github.com/wixtoolset/wix/releases/download/v6.0.2/wix-cli-x64.msi" -OutFile $msi
           Start-Process msiexec.exe -ArgumentList "/i `"$msi`" /quiet /norestart" -Wait
           $env:PATH += ";C:\Program Files (x86)\WiX Toolset v6\bin"
 
-      # 6. Build the MSI installer
       - name: Build MSI installer
+        if: github.ref == 'refs/heads/main'
         run: |
           $sourceDir = "$(pwd)\bin\Release\net8.0-windows"
           $wixObj = "Setup\setup.wixobj"
           $msiOut = "Setup\bin\Release\UtilityDocuments.msi"
-
-          # Compile .wxs to .wixobj
           candle.exe -dSourceDir=$sourceDir Setup\setup.wxs -out $wixObj
-
-          # Link .wixobj to .msi
           light.exe $wixObj -out $msiOut
 
-      # 7. List build artifacts
-      - name: List build artifacts
-        run: Get-ChildItem -Recurse .\bin, .\Setup\bin | Select-Object FullName, Length
-
-      # 8. Upload MSI artifact
       - name: Upload Artifacts (MSI)
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: windows-installer
           path: Setup/bin/Release/**/*.msi
+
+      # --- Steps for other branches (ZIP) ---
+      - name: Package application artifacts (ZIP)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          $sourceDir = "bin/Release/net8.0-windows"
+          Compress-Archive -Path "$sourceDir\*" -DestinationPath "UtilityDocuments.zip"
+
+      - name: Upload Artifacts (ZIP)
+        if: github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-application-zip
+          path: ./*.zip
 
   create-release-on-tag:
     runs-on: ubuntu-latest
