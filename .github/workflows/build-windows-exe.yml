@@ -32,7 +32,7 @@ jobs:
 
       # 4. Build the WPF application
       - name: Build the application
-        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore --self-contained true -r win-x64
+        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore --self-contained true
 
       # --- Steps for main branch (Installer) ---
       - name: Install WiX Toolset
