@@ -46,7 +46,7 @@ jobs:
       - name: Build MSI installer
         if: github.ref == 'refs/heads/main'
         run: |
-          $sourceDir = "$(pwd)\bin\Release\net8.0-windows\win-x64\publish"
+          $sourceDir = "$(pwd)\bin\Release\net8.0-windows\win-x86\publish"
           $wixObj = "Setup\setup.wixobj"
           $msiOut = "Setup\bin\Release\UtilityDocuments.msi"
           candle.exe -dSourceDir=$sourceDir Setup\setup.wxs -out $wixObj
@@ -63,7 +63,7 @@ jobs:
       - name: Package application artifacts (ZIP)
         if: github.ref != 'refs/heads/main'
         run: |
-          $sourceDir = "bin/Release/net8.0-windows/win-x64/publish"
+          $sourceDir = "bin/Release/net8.0-windows/win-x86/publish"
           Compress-Archive -Path "$sourceDir\*" -DestinationPath "UtilityDocuments.zip"
 
       - name: Upload Artifacts (ZIP)
