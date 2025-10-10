@@ -5,7 +5,6 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>UtilityDocuments</RootNamespace>
-    <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>

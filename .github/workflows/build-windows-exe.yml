@@ -28,11 +28,11 @@ jobs:
 
       # 3. Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore UtilityDocuments.csproj
+        run: dotnet restore UtilityDocuments.csproj -r win-x86
 
       # 4. Publish the WPF application
       - name: Publish the application
-        run: dotnet publish UtilityDocuments.csproj --configuration Release --no-restore --self-contained true
+        run: dotnet publish UtilityDocuments.csproj --configuration Release --no-restore --self-contained true -r win-x86
 
       # --- Steps for main branch (Installer) ---
       - name: Install WiX Toolset
