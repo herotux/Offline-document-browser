@@ -32,7 +32,7 @@ jobs:
 
       # 4. Build the WPF application
       - name: Build the application
-        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore
+        run: dotnet build UtilityDocuments.csproj --configuration Release --no-restore --self-contained true -r win-x64
 
       # --- Steps for main branch (Installer) ---
       - name: Install WiX Toolset
@@ -46,7 +46,7 @@ jobs:
       - name: Build MSI installer
         if: github.ref == 'refs/heads/main'
         run: |
-          $sourceDir = "$(pwd)\bin\Release\net8.0-windows"
+          $sourceDir = "$(pwd)\bin\Release\net8.0-windows\win-x64\publish"
           $wixObj = "Setup\setup.wixobj"
           $msiOut = "Setup\bin\Release\UtilityDocuments.msi"
           candle.exe -dSourceDir=$sourceDir Setup\setup.wxs -out $wixObj
@@ -63,7 +63,7 @@ jobs:
       - name: Package application artifacts (ZIP)
         if: github.ref != 'refs/heads/main'
         run: |
-          $sourceDir = "bin/Release/net8.0-windows"
+          $sourceDir = "bin/Release/net8.0-windows/win-x64/publish"
           Compress-Archive -Path "$sourceDir\*" -DestinationPath "UtilityDocuments.zip"
 
       - name: Upload Artifacts (ZIP)
