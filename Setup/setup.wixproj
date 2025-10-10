@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(ProgramFiles)\WiX Toolset v4\MSBuild\wix.targets</WixTargetsPath>
+    <SourceDir>$(MSBuildThisFileDirectory)..\UtilityDocuments</SourceDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Wix Include="setup.wxs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UtilityDocuments.csproj" />
+  </ItemGroup>
+
+</Project>
