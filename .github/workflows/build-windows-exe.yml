@@ -64,9 +64,6 @@ jobs:
           -p:Version=${{ steps.version.outputs.value }}
           --output artifacts/publish
 
-      - name: Install WiX SDK
-        run: dotnet tool install --global wix --version 6.0.2
-
       - name: Build MSI installer
         shell: pwsh
         run: |
