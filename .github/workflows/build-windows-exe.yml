@@ -12,12 +12,6 @@ on:
       - main
       - create-wpf-pdf-explorer
   workflow_dispatch:
-    inputs:
-      publish_release:
-        description: Publish a GitHub Release (normally use a v* tag)
-        required: false
-        type: boolean
-        default: false
 
 permissions:
   contents: write
