@@ -5,11 +5,11 @@ Unicode true
   !define PRODUCT_VERSION "1.0.0"
 !endif
 !ifndef PUBLISH_DIR
-  !define PUBLISH_DIR "..\artifacts\publish"
+  !define PUBLISH_DIR "artifacts\\publish"
 !endif
 
 Name "Utility Documents"
-OutFile "..\artifacts\UtilityDocuments-Setup-${PRODUCT_VERSION}-x64.exe"
+OutFile "artifacts\\UtilityDocuments-Setup-${PRODUCT_VERSION}-x64.exe"
 InstallDir "$PROGRAMFILES64\Utility Documents"
 InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\UtilityDocuments" "InstallLocation"
 RequestExecutionLevel admin
