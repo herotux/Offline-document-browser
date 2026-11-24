@@ -4,7 +4,8 @@
            Manufacturer="herotux"
            Version="$(var.ProductVersion)"
            UpgradeCode="c98c2bbc-0bcc-4cc1-8e88-c0acdf806542"
-           Scope="perMachine">
+           Scope="perMachine"
+           Platform="x64">
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of Utility Documents is already installed." />
     <MediaTemplate EmbedCab="yes" />
