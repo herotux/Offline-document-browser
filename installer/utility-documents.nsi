@@ -9,7 +9,7 @@ Unicode true
 !endif
 
 Name "Utility Documents"
-OutFile "artifacts\\UtilityDocuments-Setup-${PRODUCT_VERSION}-x64.exe"
+OutFile "..\\artifacts\\UtilityDocuments-Setup-${PRODUCT_VERSION}-x64.exe"
 InstallDir "$PROGRAMFILES64\Utility Documents"
 InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\UtilityDocuments" "InstallLocation"
 RequestExecutionLevel admin
